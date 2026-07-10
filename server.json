@@ -3,7 +3,7 @@
   "name": "io.clueso/video",
   "title": "Clueso",
   "description": "Make videos and docs with your AI agent — describe what you need, every output stays editable.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "repository": {
     "url": "https://github.com/clueso-ai/clueso-mcp",
     "source": "github"
