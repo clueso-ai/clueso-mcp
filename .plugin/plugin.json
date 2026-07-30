@@ -1,0 +1,14 @@
+{
+  "name": "clueso",
+  "version": "1.0.0",
+  "description": "Create stunning videos and step-by-step guides from your AI agent — just give a prompt and Clueso builds it, fully editable.",
+  "author": {
+    "name": "Desklamp, Inc.",
+    "url": "https://www.clueso.io"
+  },
+  "homepage": "https://www.clueso.io/mcp",
+  "repository": "https://github.com/clueso-ai/clueso-mcp",
+  "license": "MIT",
+  "logo": "assets/clueso-logo.png",
+  "keywords": ["video", "documentation", "content-creation", "voiceover", "screen-recording", "mcp"]
+}
