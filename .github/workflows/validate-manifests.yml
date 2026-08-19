@@ -1,0 +1,32 @@
+name: Validate manifests
+
+# server.json is what the official MCP registry publishes from, and glama.json is
+# what Glama reads to verify listing ownership. Nothing else in this repo builds,
+# so without this check a typo in either one silently degrades our directory
+# listings instead of failing anything.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    # Weekly, so schema drift or a version we have already published upstream
+    # surfaces on its own rather than at the next release.
+    - cron: "17 6 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install --disable-pip-version-check jsonschema
+
+      - run: python scripts/validate_manifests.py
