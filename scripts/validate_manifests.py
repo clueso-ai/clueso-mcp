@@ -54,6 +54,49 @@ def main() -> int:
             continue
         print(f"ok   {path} validates against {schema_url}")
 
+    # Icons are URLs in someone else's fetcher, so a 404 or a mislabelled type
+    # only shows up as "the listing has no logo". Check both. The content-type
+    # comparison is not pedantry: the platform's own /favicon.ico serves WebP
+    # bytes as image/vnd.microsoft.icon, which strict favicon parsers reject, and
+    # that is exactly the shape of bug this catches.
+    try:
+        icons = json.load(open("server.json")).get("icons") or []
+    except Exception:
+        icons = []
+    for icon in icons:
+        src = icon.get("src", "")
+        declared = icon.get("mimeType")
+        try:
+            req = urllib.request.Request(
+                src,
+                method="GET",
+                headers={"User-Agent": "clueso-mcp-manifest-validator (+https://github.com/clueso-ai/clueso-mcp)"},
+            )
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                served = (resp.headers.get("Content-Type") or "").split(";")[0].strip()
+                body = resp.read(64)
+        except Exception as exc:
+            print(f"FAIL icons: {src} is not fetchable — {exc}")
+            failed = True
+            continue
+        if declared and served and served != declared:
+            print(f"FAIL icons: {src} declares {declared} but is served as {served}")
+            failed = True
+            continue
+        # Cheap magic-byte sanity check, so a correct header over wrong bytes
+        # still fails.
+        magic = {
+            "image/png": body.startswith(b"\x89PNG"),
+            "image/svg+xml": b"<svg" in body or body.lstrip().startswith(b"<?xml"),
+            "image/jpeg": body.startswith(b"\xff\xd8"),
+            "image/webp": body[:4] == b"RIFF" and body[8:12] == b"WEBP",
+        }.get(served)
+        if magic is False:
+            print(f"FAIL icons: {src} served as {served} but the bytes are not {served}")
+            failed = True
+            continue
+        print(f"ok   icons: {src} -> {served}")
+
     # The registry rejects a re-publish of an existing version, so drift between
     # server.json and the live registry is the failure mode that actually bites.
     try:
