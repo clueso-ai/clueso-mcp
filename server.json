@@ -4,7 +4,30 @@
   "title": "Clueso",
   "description": "Make videos and docs with your AI agent — describe what you need, every output stays editable.",
   "websiteUrl": "https://help.clueso.io/mcp-setup",
-  "version": "1.0.2",
+  "version": "1.0.3",
+  "icons": [
+    {
+      "src": "https://web.clueso.io/logo512.png",
+      "mimeType": "image/png",
+      "sizes": [
+        "512x512"
+      ]
+    },
+    {
+      "src": "https://web.clueso.io/logo192.png",
+      "mimeType": "image/png",
+      "sizes": [
+        "192x192"
+      ]
+    },
+    {
+      "src": "https://web.clueso.io/favicon.svg",
+      "mimeType": "image/svg+xml",
+      "sizes": [
+        "any"
+      ]
+    }
+  ],
   "repository": {
     "url": "https://github.com/clueso-ai/clueso-mcp",
     "source": "github"

@@ -20,12 +20,50 @@ account, and start creating in about two minutes.
 
 ## Connect your MCP
 
-Works with **Claude, ChatGPT, Gemini, Cursor — or any MCP client.**
+Works with **Claude, ChatGPT, Gemini, GitHub Copilot, Cursor — or any MCP client.**
 
 - **Claude / Claude Code:** Settings → Connectors → Add custom connector →
   `https://connect.clueso.io/mcp` → authorize.
 - **ChatGPT / Cursor / any other MCP client:** add a custom connector pointing
   at the same URL; your client walks you through the OAuth sign-in.
+
+### GitHub Copilot
+
+Copilot speaks the same Streamable HTTP + OAuth that every other client here
+uses, so there is nothing Copilot-specific to install — just point it at the
+same URL.
+
+**VS Code** — add `.vscode/mcp.json` to your workspace (or your user config):
+
+```json
+{
+  "servers": {
+    "clueso": {
+      "type": "http",
+      "url": "https://connect.clueso.io/mcp"
+    }
+  }
+}
+```
+
+Or from the terminal, without editing files by hand:
+
+```bash
+code --add-mcp '{"name":"clueso","type":"http","url":"https://connect.clueso.io/mcp"}'
+```
+
+Then open Copilot Chat in **Agent mode** and pick the `clueso` tools. The first
+call opens a browser to sign in to Clueso; after that the session is
+remembered.
+
+**Copilot CLI** — add the same server via `/mcp add`, choosing HTTP transport
+and the URL above. See
+[Adding MCP servers for GitHub Copilot CLI](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-mcp-servers).
+
+> **On Copilot Business / Enterprise plans**, an admin has to enable the
+> **"MCP servers in Copilot"** policy for your organization before any MCP
+> server — including this one — becomes available. If Copilot never lists the
+> `clueso` tools, check that policy first; it is the usual cause.
 
 Full setup guide: https://help.clueso.io/mcp-setup
 
