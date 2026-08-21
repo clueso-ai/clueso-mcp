@@ -7,21 +7,14 @@
   "version": "1.0.3",
   "icons": [
     {
-      "src": "https://web.clueso.io/logo512.png",
+      "src": "https://connect.clueso.io/icon-512.png",
       "mimeType": "image/png",
       "sizes": [
         "512x512"
       ]
     },
     {
-      "src": "https://web.clueso.io/logo192.png",
-      "mimeType": "image/png",
-      "sizes": [
-        "192x192"
-      ]
-    },
-    {
-      "src": "https://web.clueso.io/favicon.svg",
+      "src": "https://connect.clueso.io/favicon.svg",
       "mimeType": "image/svg+xml",
       "sizes": [
         "any"
